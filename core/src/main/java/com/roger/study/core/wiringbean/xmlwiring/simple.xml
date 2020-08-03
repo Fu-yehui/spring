@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/util
+         http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--调用SgtPeppers的默认构造器创建bean -->
+    <bean id="compactDisc" class="com.roger.study.core.wiringbean.autowiring.SgtPeppers"/>
+
+    <!--构造器注入-->
+    <bean id="cdPlayer1" class="com.roger.study.core.wiringbean.autowiring.CDPlayer">
+        <constructor-arg ref="compactDisc"/>
+    </bean>
+
+
+    <!-- cd为构造器参数名-->
+    <bean id="cdPlayer2" class="com.roger.study.core.wiringbean.autowiring.CDPlayer"
+        c:cd-ref="compactDisc"/>
+
+    <!--使用构造器参数索引-->
+    <bean id="cdPlayer3" class="com.roger.study.core.wiringbean.autowiring.CDPlayer"
+          c:_0-ref="compactDisc"/>
+
+
+    <!--将字面量注入到构造器中 -->
+    <bean id="blankDisc" class="com.roger.study.core.wiringbean.xmlwiring.BlankDisc">
+        <constructor-arg value="Sgt. Pepper's Longely Heartts Club Band" />
+        <constructor-arg value="The Beatles" />
+    </bean>
+
+    <bean id="blankDisc1" class="com.roger.study.core.wiringbean.xmlwiring.BlankDisc"
+          c:title="Sgt. Pepper's Longely Heartts Club Band"
+          c:artist="The Beatles" />
+
+    <bean id="blankDisc2" class="com.roger.study.core.wiringbean.xmlwiring.BlankDisc"
+          c:_0="Sgt. Pepper's Longely Heartts Club Band"
+          c:_1="The Beatles" />
+
+
+    <!--装配集合无法使用c-命名空间 -->
+    <bean id="realDisc" class="com.roger.study.core.wiringbean.xmlwiring.RealDisc">
+        <constructor-arg value="Sgt. Pepper's Longely Heartts Club Band" />
+        <constructor-arg value="The Beatles" />
+
+        <constructor-arg>
+            <list>
+                <value>Sgt. Pepper's Longely Heartts Club Band</value>
+                <value>With a Little Help from My Friends</value>
+            </list>
+        </constructor-arg>
+
+        <constructor-arg>
+            <list>
+                <ref bean="blankDisc"/>
+                <ref bean="compactDisc" />
+            </list>
+        </constructor-arg>
+
+        <constructor-arg>
+            <set>
+                <ref bean="cdPlayer1"/>
+                <ref bean="cdPlayer2" />
+            </set>
+        </constructor-arg>
+    </bean>
+
+
+    <!--属性注入-->
+
+    <bean id="cdPlayer4" class="com.roger.study.core.wiringbean.xmlwiring.CDPlayer">
+            <property name="cd" ref="blankDisc" />
+    </bean>
+
+    <!--  p-命名空间-->
+    <bean id="cdPLayer5"
+          class="com.roger.study.core.wiringbean.xmlwiring.CDPlayer"
+          p:cd-ref="blankDisc"/>
+
+    <!--将字面量注入到属性中 -->
+    <bean id="blankDiscProperty" class="com.roger.study.core.wiringbean.xmlwiring.BlankDiscProperty">
+        <property name="title" value="Sgt. Pepper's Longely Heartts Club Band" />
+        <property name="artist" value="The Beatles" />
+        <property name="tracks" >
+            <list>
+                <value>Sgt. Pepper's Longely Heartts Club Band</value>
+                <value>With a Little Help from My Friends</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--无法用p-命名空间来装配集合-->
+    <bean id="blankDiscProperty2" class="com.roger.study.core.wiringbean.xmlwiring.BlankDiscProperty"
+          p:title="Sgt. Pepper's Longely Heartts Club Band"
+          p:artist="The Beatles">
+
+        <property name="tracks" >
+            <list>
+                <value>Sgt. Pepper's Longely Heartts Club Band</value>
+                <value>With a Little Help from My Friends</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <!--使用util-命名空间创建列表的bean  再将其使用p-命名空间注入到blankDiscProperty3中-->
+    <bean id="blankDiscProperty3" class="com.roger.study.core.wiringbean.xmlwiring.BlankDiscProperty"
+          p:title="Sgt. Pepper's Longely Heartts Club Band"
+          p:artist="The Beatles"
+          p:tracks-ref="trackList">
+
+
+    </bean>
+
+    <util:list id="trackList">
+        <value>Sgt. Pepper's Longely Heartts Club Band</value>
+        <value>With a Little Help from My Friends</value>
+    </util:list>
+</beans>

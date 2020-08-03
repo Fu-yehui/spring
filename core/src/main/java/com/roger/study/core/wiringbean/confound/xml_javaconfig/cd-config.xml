@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="compactDisc" class="com.roger.study.core.wiringbean.xmlwiring.BlankDisc"
+          c:_0="Sgt. Pepper's Longely Heartts Club Band"
+          c:artist="The Beatles">
+        <constructor-arg>
+            <value>Sgt. Pepper's Longely Heartts Club Band</value>
+            <value>With a Little Help from My Friends</value>
+        </constructor-arg>
+    </bean>
+</beans>

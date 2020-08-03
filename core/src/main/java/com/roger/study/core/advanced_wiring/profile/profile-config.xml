@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+    <!--重复使用<beans>元素来指定多个profile-->
+
+    <beans profile="prod">
+        <jee:jndi-lookup id="dataSource"
+                         jndi-name="jdbc/myDataSource"
+                         resource-ref="true"
+                         proxy-interface="javax.sql.DataSource" />
+    </beans>
+
+    <beans profile="dev">
+        <!--dataSource的配置 -->
+    </beans>
+
+    <beans profile="qa">
+
+    </beans>
+
+
+
+
+</beans>
+
+
+
