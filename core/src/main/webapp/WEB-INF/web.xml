@@ -5,11 +5,14 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
-  <!--为上下文设置默认的profile
-  <context-param>
-    <param-name>spring.profiles.default</param-name>
-    <param-value>dev</param-value>
-  </context-param>
 
-  -->
+    <!--为上下文设置默认的profile
+    <context-param>
+      <param-name>spring.profiles.default</param-name>
+      <param-value>dev</param-value>
+    </context-param>
+
+    -->
+
+
 </web-app>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--在XML中，通过Spring的aop命名空间启用AspectJ自动代理-->
+
+    <aop:aspectj-autoproxy/>
+
+    <bean id="audience" class="com.roger.study.core.aspect.Audience" />
+
+    <bean id="audienceAround" class="com.roger.study.core.aspect.XML.AudienceAround" />
+
+    <bean id="cd" class="com.roger.study.core.aspect.BlankDisc"
+        p:title="Sgt. Pepper's Longely Heartts Club Band"
+        p:artist="The Beatles">
+        <property name="tracks">
+            <list>
+                <value>Sgt. Pepper's Longely Heartts Club Band</value>
+                <value>With a Little Help from My Friends</value>
+            </list>
+        </property>
+
+    </bean>
+    <bean id="trackCounter" class="com.roger.study.core.aspect.XML.TrackCounter" />
+
+    <!--在XML中声明切面 -->
+    <aop:config>
+        <aop:aspect ref="audience">
+            <aop:pointcut id="performance"
+                          expression="execution(* com.roger.study.core.aspect.Performance.perform(..))"/>
+            <aop:before
+
+                pointcut-ref="performance"
+                method="silenceCellPhones" />
+            <aop:before
+                 pointcut-ref="performance"
+                 method="takeSeats" />
+            <aop:after-returning
+                    pointcut-ref="performance"
+                    method="applause" />
+            <aop:after-throwing
+                    pointcut-ref="performance"
+                     method="demandRefund" />
+        </aop:aspect>
+
+
+        <aop:aspect ref="audienceAround">
+            <aop:pointcut
+                    id="performance"
+                    expression="execution(* com.roger.study.core.aspect.Performance.perform(..))"/>
+
+            <aop:around
+                    pointcut-ref="performance"
+                    method="watchPerformance" />
+        </aop:aspect>
+
+
+
+
+
+
+
+
+
+        <aop:aspect ref="trackCounter" >
+            <aop:pointcut id="trackPlayed"
+                          expression="execution(* com.roger.study.core.aspect.BlankDisc.playTrack(int))
+                                        and args(trackNumber)"/>
+
+
+            <aop:before
+                    pointcut-ref="trackPlayed"
+                    method="countTrack" />
+        </aop:aspect>
+
+
+
+
+
+
+    </aop:config>
+
+
+</beans>

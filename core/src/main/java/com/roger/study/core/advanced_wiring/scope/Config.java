@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 
 @Configuration
 
+
 public class Config {
 
     @Bean

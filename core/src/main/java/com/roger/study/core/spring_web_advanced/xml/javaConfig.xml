@@ -1,0 +1,67 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<!--WebConfig,RootConfig使用Java配置类，非XML配置文件 -->
+
+
+<web-app>
+    <display-name>Archetype Created Web Application</display-name>
+
+    <!--DispatcherServlet和ContextLoaderListener各自加载一个Spring应用上下文-->
+
+    <!--使用Java配置类-->
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>
+            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+        </param-value>
+    </context-param>
+    <!--设置 根上下文配置文件位置 RootContext,被ContextLoaderListener加载-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            com.roger.study.core.spring_web.spittr.config.RootConfig
+        </param-value>
+    </context-param>
+
+    <!--注册ContextLoaderListener-->
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+
+
+    <!--注册DispatcherServlet-->
+    <!--DispatcherServlet会根据servlet-name找到一个文件：WebConfig. 并加载-->
+    <servlet>
+        <servlet-name>appServlet</servlet-name>   <!--  /WEB-INF/appServlet-context.xml -->
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+
+
+        <!--使用Java配置类-->
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>
+                org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+            </param-value>
+        </init-param>
+        <!--指定WebConfig配置文件 -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                com.roger.study.core.spring_web.spittr.config.WebConfig
+            </param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>appServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+</web-app>
